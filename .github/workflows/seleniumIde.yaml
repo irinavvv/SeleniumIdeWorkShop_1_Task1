@@ -1,31 +1,32 @@
-name: Selenium ide CI
+name: Selenium IDE CI
 
 on:
-   push:
-      branches:
-         -main
-   # pull_request:
-   #    branches:
-   #       -main
+  push:
+    branches:
+      - main
+  # Ако искаш да се пуска и на pull request:
+  # pull_request:
+  #   branches:
+  #     - main
 
 jobs:
-   build:
-      runs-on: ubuntu-latest
-      steps:
-         - name: Checkout code
-         - uses: actions/checkout@v3
+  build:
+    runs-on: ubuntu-latest
 
-         - name: Set up .Net Core
-             uses: actions/setup-dotnet@v3
-             with:
-               dotnet-version: '8.0.x'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-         - name: Install dependencies
-           run: dotnet restore
-         
-         - name: Build
-           run: dotnet build --no-restore
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
 
-         - name: run tests
-           run: dotnet test --verbosity normal
+      - name: Install dependencies
+        run: dotnet restore
 
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Run tests
+        run: dotnet test --verbosity normal
